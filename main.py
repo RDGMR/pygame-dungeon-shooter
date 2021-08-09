@@ -3,6 +3,7 @@ from pygame.locals import *
 from player import Player
 from bullet import Bullet
 from map import Map
+from particles import Particle_manager
 
 pygame.init()
 
@@ -15,13 +16,10 @@ running = True
 bullets = []
 Map = Map(screen)
 Player = Player(screen, Map)
-
-rectfodase = pygame.Rect(10, 10, 20, 10)
+particle_manager = Particle_manager(screen)
 
 # Game loop.
 while running:
-    screen.fill("BLACK")
-
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
@@ -61,13 +59,17 @@ while running:
     Player.update()
     for bullet in bullets:
         bullet.update()
+        particle_manager.add((bullet.x, bullet.y))
         # this is ugly
         if bullet.x < 0 - 5 or bullet.y < 0 - 5 or bullet.x > width or bullet.y > height: # hardcoded
             bullets.remove(bullet)
- 
+    particle_manager.update()
+
     # Draw.
+    screen.fill("BLACK")
     Map.render()
     Player.render()
+    particle_manager.render()
     for bullet in bullets:
         bullet.render()
     
