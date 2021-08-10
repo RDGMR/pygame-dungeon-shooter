@@ -6,6 +6,7 @@ class Player:
         self.Hit = self.Hit()
         self.screen = screen
         self.tiles = Map.tiles
+        self.shooting = False
         self.last_x = 1
         self.last_y = 1
         self.x = 0
@@ -31,7 +32,6 @@ class Player:
         self.up = False
         self.down = False
         self.vel = 1
-        # self.running = False
         self.run_counter = 0
 
     class Hit:
@@ -56,7 +56,6 @@ class Player:
         return collisions
 
     def move(self, rect, movement):
-        print(movement)
         rect.x += movement[0]
         collisions = self.collide_test(rect, self.tiles)
         for tile in collisions:

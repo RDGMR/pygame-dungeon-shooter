@@ -30,4 +30,4 @@ class Particle_manager:
             self.x += self.x_vel
             self.y += self.y_vel
             self.y_vel += 0.1
-            self.radius -= 0.05
+            self.radius -= 0.5

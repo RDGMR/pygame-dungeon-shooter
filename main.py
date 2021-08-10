@@ -29,8 +29,6 @@ while running:
             elif event.key == pygame.K_a:
                 if not Player.Hit.active:
                     Player.damage()
-            elif event.key == pygame.K_f:
-                bullets.append(Bullet(Player))
 
             elif event.key == pygame.K_RIGHT:
                 Player.right = True
@@ -55,7 +53,14 @@ while running:
             elif event.key == pygame.K_DOWN:
                 Player.down = False
 
+        elif event.type == MOUSEBUTTONDOWN:
+            Player.shooting = True
+        elif event.type == MOUSEBUTTONUP:
+            Player.shooting = False
+
     # Update.
+    if Player.shooting:
+        bullets.append(Bullet(Player))
     Player.update()
     for bullet in bullets:
         bullet.update()
