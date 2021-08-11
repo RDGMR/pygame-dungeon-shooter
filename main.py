@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from player import Player
-from bullet import Bullet
+from bullet import Bullet_manager
 from map import Map
 from particles import Particle_manager
 from enemy import Enemy_manager
@@ -14,11 +14,11 @@ fpsClock = pygame.time.Clock()
 size = width, height = 426, 240 # sei la man
 screen = pygame.display.set_mode(size, pygame.SCALED)
 running = True
-bullets = []
 Map = Map(screen)
 Player = Player(screen, Map)
 particle_manager = Particle_manager(screen)
-enemy_manager = Enemy_manager(Player, bullets)
+enemy_manager = Enemy_manager(Player)
+bullet_manager = Bullet_manager(Player, enemy_manager.enemies, particle_manager)
 
 # Game loop.
 while running:
@@ -63,17 +63,9 @@ while running:
         elif event.type == MOUSEBUTTONUP:
             Player.shooting = False
 
-    # Update.
-    if Player.shooting:
-        bullets.append(Bullet(Player))
     Player.update()
-    for bullet in bullets:
-        bullet.update()
-        particle_manager.add((bullet.x, bullet.y))
-        # this is ugly
-        if bullet.x < 0 - 5 or bullet.y < 0 - 5 or bullet.x > width or bullet.y > height: # hardcoded
-            bullets.remove(bullet)
     enemy_manager.update()
+    bullet_manager.update()
     particle_manager.update()
 
     # Draw.
@@ -81,9 +73,8 @@ while running:
     Map.render()
     Player.render()
     enemy_manager.render()
+    bullet_manager.render()
     particle_manager.render()
-    for bullet in bullets:
-        bullet.render()
     
     pygame.display.flip()
     fpsClock.tick(fps)

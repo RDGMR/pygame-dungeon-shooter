@@ -4,10 +4,9 @@ import pygame
 import math
 
 class Enemy_manager:
-    def __init__(self, target, bullets):
+    def __init__(self, target):
         self.screen = target.screen
         self.target = target
-        self.bullets = bullets
         self.enemies = []
 
         self.sprites = []
@@ -26,12 +25,6 @@ class Enemy_manager:
     def update(self):
         for enemy in self.enemies:
             enemy.update(self.target)
-
-            for bullet in self.bullets:
-                if enemy.rect.colliderect((bullet.x, bullet.y, 5, 5)):
-                    enemy.hp -= 1
-                    self.bullets.remove(bullet)
-                    # break
 
             if enemy.current_sprite >= len(self.sprites):
                 enemy.current_sprite = 0
