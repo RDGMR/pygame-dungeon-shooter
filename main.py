@@ -4,6 +4,7 @@ from player import Player
 from bullet import Bullet
 from map import Map
 from particles import Particle_manager
+from enemy import Enemy_manager
 
 pygame.init()
 
@@ -11,12 +12,13 @@ fps = 60
 fpsClock = pygame.time.Clock()
 
 size = width, height = 426, 240 # sei la man
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size, pygame.SCALED)
 running = True
 bullets = []
 Map = Map(screen)
 Player = Player(screen, Map)
 particle_manager = Particle_manager(screen)
+enemy_manager = Enemy_manager(Player, bullets)
 
 # Game loop.
 while running:
@@ -43,6 +45,9 @@ while running:
                 Player.down = True
                 Player.last_y = 1
 
+            elif event.key == pygame.K_e:
+                enemy_manager.spawn()
+
         elif event.type == KEYUP:
             if event.key == pygame.K_RIGHT:
                 Player.right = False
@@ -68,12 +73,14 @@ while running:
         # this is ugly
         if bullet.x < 0 - 5 or bullet.y < 0 - 5 or bullet.x > width or bullet.y > height: # hardcoded
             bullets.remove(bullet)
+    enemy_manager.update()
     particle_manager.update()
 
     # Draw.
     screen.fill("BLACK")
     Map.render()
     Player.render()
+    enemy_manager.render()
     particle_manager.render()
     for bullet in bullets:
         bullet.render()
