@@ -80,17 +80,13 @@ class Player:
 
             if self.Hit.right:
                 movement[0] -= self.Hit.vel
-                # self.x -= self.Hit.vel
             elif self.Hit.left:
                 movement[0] += self.Hit.vel
-                # self.x += self.Hit.vel
 
             if self.Hit.up:
                 movement[1] += self.Hit.vel
-                # self.y += self.Hit.vel
             elif self.Hit.down:
                 movement[1] -= self.Hit.vel
-                # self.y -= self.Hit.vel
 
             self.rect = self.move(self.rect, movement)
         
@@ -125,13 +121,11 @@ class Player:
                 self.rect = self.move(self.rect, movement)
 
             if self.right or self.left or self.up or self.down:
-                # self.running = True
                 self.image = self.run_sprites[self.run_counter]
                 self.run_counter += 1
                 if self.run_counter >= len(self.run_sprites):
                     self.run_counter = 0
             else:
-                # self.running = False
                 self.image = self.sprites[self.current_sprite]
 
     def damage(self):

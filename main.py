@@ -18,7 +18,7 @@ Map = Map(screen)
 Player = Player(screen, Map)
 particle_manager = Particle_manager(screen)
 enemy_manager = Enemy_manager(Player)
-bullet_manager = Bullet_manager(Player, enemy_manager.enemies, particle_manager)
+bullet_manager = Bullet_manager(Player, enemy_manager.enemies, particle_manager, Map.tiles)
 
 # Game loop.
 while running:

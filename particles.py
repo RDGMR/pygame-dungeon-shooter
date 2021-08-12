@@ -9,6 +9,9 @@ class Particle_manager:
     def add(self, pos):
         self.particles.append(self.Particle(pos))
 
+    def explode(self, pos):
+        self.particles.append(self.Particle(pos))
+
     def update(self):
         for particle in self.particles:
             if particle.radius <= 0:
@@ -30,4 +33,4 @@ class Particle_manager:
             self.x += self.x_vel
             self.y += self.y_vel
             self.y_vel += 0.1
-            self.radius -= 0.5
+            self.radius -= 0.25
